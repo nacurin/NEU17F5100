@@ -1,0 +1,207 @@
+1.	Hiking
+Objects and Behaviors:
+
+People
+	Data:	name, phoneNo, address
+	Behavior:	eat, hike, rent, buyGas, drive, getFull, partyAtHome
+
+Car
+	Data:	name, plateNum
+	Behavior: run
+
+Restaurant
+	Data:	name,	menu,	price
+	Behavior:	provideFood
+
+GasStation
+	Data:	name, price
+	Behavior:	fillGas
+
+
+Sequence of Flow - Invoke Objects with Behaviors:
+
+People myFriends
+Car	ReachNow
+Restaurant	McDonald's
+GasStation	Gas711
+
+myFriends.rent → ReachNow : authorize
+if(authorize is true)
+	myFriends.rent  → 	ReachNow	:	Gas711
+	myFriends.buyGas	→	ReachNow	:	gas
+	GasStation.fillGas	→	ReachNow	:	ReachNow.getFull
+	myFriends.drive		→	ReachNow	:	McDonald's
+	McDonald's.provideFood 	→	myFriends 	:	myFriends.getFull
+	myFriends.drive		→	ReachNow	:	destination
+	myFriends.hide		→	destination	:	fun
+else
+	myFriends.partyAtHome
+end
+
+
+2. Organise a career fair(Suppose you are the organiser)
+Objects and Behaviors:
+Organiser
+	Data:	name
+	Behavior:	talk,	bookHall,	inviteCompany, inviteStudent
+
+Hall
+	Data:	name
+	Behavior:	/
+
+HR
+	Data:	name, company, goal
+	Behavior:	talk,	holdInterview, offer
+
+Student
+	Data:	name,	ability,	age
+	Behavior:	takeInterview,	sendResume,	talk 
+
+Company
+	Data:	name,	position
+	Behavior:  sendHR
+
+Sequence of Flow - Invoke Objects with Behaviors:
+Organiser me
+Hall greatHall
+HR PoogleHR
+Company Poogle, ayazon
+Student newGrads
+
+Loop
+	if	companyAuthorize is not true
+		break
+	else
+		me.inviteCompany →	Poogle, ayazon : companyAuthorize
+	end
+end
+Loop
+	if	studentsCome
+		break
+	else
+		me.inviteStudent →  newGrads	:	studentsCome
+	end
+end
+Loop
+	if hallAuthorize
+		break
+	else
+		me.bookHall	→	greatHall	:	hallAuthorize
+	end
+end
+newGrads.talk →	PoogleHR	:	askResume
+newGrads.sendResume,	askResume →	PoogleHR	:	PoogleHR.holdInterview
+PoogleHR.holdInterview	→	newGrads.takeInterview	:	pass
+if pass
+	PoogleHR.offer →	newGrads	:	offer
+
+
+
+3. Order Pizza from Pizza Hut
+Objects and Behaviors:
+People
+	Data:	name,	age,	money
+	Behavior:	getHungry,	pay,	eat,	orderPizza,	chooseFlavor
+
+PizzaHut
+	Data:	menu,	stock
+	Behavior:	giveMenu,	sendPizza
+
+Pizza
+	Data:	flavor
+	Behavior:	/
+
+Sequence of Flow - Invoke Objects with Behaviors:
+
+People customer
+PizzaHut pizzahut
+Pizza meatPizza, cheesePizza
+
+if	eater.getHungry
+	eater.orderPizza →	pizzahut :	menu
+	eater.chooseFlavor	→	menu :  decision
+	Loop
+		if decision
+			break
+		else
+			eater.chooseFlavor	→	menu :  decision
+		end
+	end
+	eater.pay →	pizzahut : cheesePizza, meatPizza
+	eater.eat → cheesePizza, meatPizza : full
+end
+
+
+
+4. Design a code sharing platform (eg: Github).
+Objects and Behaviors:
+Coder
+	Data:	username,	password,	name,	code
+	Behavior:	writeCode,	login, saveCode, createRepo, share
+
+Github
+	Data:	name, repository[]
+	Behavior /
+
+Repository
+	Data:	name, code[]
+	Behavior: saveCode
+
+Code
+	Data:	title, code, writer
+	Behavior:	/
+
+Sequence of Flow - Invoke Objects with Behaviors:
+
+Coder masterCoder, learner
+Github github
+Repository repo
+
+masterCoder.login → github : authorize
+if authroize
+	masterCoder.createRepo → github : repo
+	Loop
+		if projectComplete
+			break
+		else
+			masterCoder.writeCode → repo : code
+			repo = repo + code
+		end
+	end
+	masterCoder.share, repo → learner : study
+end
+
+
+
+
+5. Design a soft-drink/snacks vending machine.
+Objects and Behaviors:
+Customer
+	Data:	name, money
+	Behavior: getThirsty, pay, chooseDrink, drink, beHappy
+
+VendingMachine
+	Data:	id
+	Behavior:	getMoney, provideDrink, giveMenu, endTrade
+
+Sequence of Flow - Invoke Objects with Behaviors:
+Customer customer
+VendingMachine machine
+
+if customer.getThirsty
+	customer.chooseDrink → machine.giveMenu : decision
+	customer.pay → machine : enoughMoney
+	if enoughMoney
+		machine.provideDrink → customer : softDrink
+	else
+		machine.endTrade
+	end
+	customer.drink → softDrink : customer.beHappy = true
+end
+
+
+
+
+
+
+
