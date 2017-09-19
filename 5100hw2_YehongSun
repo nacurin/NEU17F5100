@@ -1,0 +1,120 @@
+class Main {
+    public static void main(String[] args) {
+        
+        System.out.println("Q1: The final salary is " + employeeSalary(15.00));
+        System.out.println("Q2: The sum of digits is " + addDigits(12345));
+        printPerfectNumbers(99);
+        Pizza p = new Pizza("meat", 1.00, 5);
+        System.out.println("\nQ4: The new pizza unitPrice: " + p.unitPrice);
+        Customer customer = new Customer("Ted");
+        System.out.println("Q5: The customer order sum: " + customer.totalSum());
+        printIsoscelesTriangle(6);
+    }
+    
+    public static double employeeSalary(Double hours){
+        Double hCount = 0.0;
+        Double salary = 0.0;
+        
+        while(hours > 0){
+            hours--;
+            hCount++;
+            if(hCount <= 36){
+                salary += 15;
+            }else if(hCount > 36 && hCount <= 41){
+                salary += 15 * 1.5;
+            }else{
+                salary += 15 * 2;
+            }
+        }
+        
+        return salary;
+    }
+    public static int addDigits(int input){
+        int res = 0;
+        while(input != 0){
+            res += input%10;
+            input /= 10;
+        }
+        return res;
+    }
+    
+    public static boolean checkPerfectNumber(int num) {
+        if(num == 1)    return false;
+        int sum = 1;
+        for(int i = 2; i < Math.sqrt(num); i++){
+            if(num % i == 0)    sum += i + ((num/i == i) ? 0 : num/i);
+        }
+        return num == sum;
+    }
+    
+    public static void printPerfectNumbers(int n){
+        System.out.print("Q3: Print all perfect numbers: ");
+        for(int i = 0; i <= n; i++){
+            if(checkPerfectNumber(i))
+                System.out.print(i + " ");
+        }
+    }
+    
+    public static void printIsoscelesTriangle(int n){
+        
+        for(int i = 0; i < n; i++){
+            if(i == 0){
+                System.out.println("*");
+            }else if(i == n - 1){
+                int count = n;
+                while(count > 0){
+                    System.out.print("*");
+                    count--;
+                    
+                }
+                System.out.println("");
+            }else{
+                int count = i - 1;
+                System.out.print("*");
+                while(count > 0){
+                    System.out.print(" ");
+                    count--;
+                }
+                System.out.println("*");
+            }
+        }
+    }
+}
+
+class Pizza{
+    String pizzaType;
+    double unitPrice;
+    int loyaltyPoints;
+    
+    public Pizza(){
+        
+    }
+    public Pizza(String type, double price, int points){
+        this.pizzaType = type;
+        this.unitPrice = price;
+        this.loyaltyPoints = points;
+    }
+    
+
+}
+
+class Customer{
+    String name;
+    HashMap<Pizza, Integer> ordered;
+    
+    public Customer(String n){
+        HashMap<Pizza, Integer> ord = new HashMap<Pizza, Integer>();
+        ord.put(new Pizza("cheese", 5.0, 5), new Integer(5));
+        this.name = n;
+        this.ordered = ord;
+    }
+    
+    public int totalSum(){
+        int res = 0;
+        for(Pizza pi : ordered.keySet()){
+            Integer price = ordered.get(pi);
+            res += (int)pi.unitPrice*price.intValue();
+        }
+        return res;
+    }
+}
